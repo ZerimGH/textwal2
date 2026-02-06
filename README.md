@@ -5,6 +5,7 @@ Setup:
    > git clone https://github.com/ZerimGH/textwal2.git && cd textwal2 && ./install.sh
    >
 2) Fill in the script to set the wallpaper at ~/.config/textwal2/set-wallpaper.sh
+
    An example script for X11 might look like:
    > #!/usr/bin/env bash
    >
@@ -18,9 +19,11 @@ Setup:
    >
    > feh --bg-fill $WALLPAPER_DIR
    > 
-3) Run textwal2
+4) Run textwal2
+
    Any text given to the program will be used to render the wallpaper.
+
    For example to render the text "Hello, World!":
-   > echo 'Hello, World!' | textwal2
+   > echo 'Hello, World!' | textwal2 set
    >
 You can configure the appearance of the text rendered at ~/.config/textwal2/config.toml
