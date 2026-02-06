@@ -12,15 +12,13 @@
 char *run_command(const char *command) {
   if (!command) return NULL;
 
-  size_t len = strlen(expanded) + 16;
+  size_t len = strlen(command) + 16;
   char *cmd = malloc(len);
   if (!cmd) {
-    free(expanded);
     return NULL;
   }
 
-  snprintf(cmd, len, "/bin/sh -c \"%s\"", expanded);
-  free(expanded);
+  snprintf(cmd, len, "/bin/sh -c \"%s\"", command);
   FILE *fp = popen(cmd, "r");
   free(cmd);
 
