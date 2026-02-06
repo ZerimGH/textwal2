@@ -52,7 +52,7 @@ Config *read_config(void) {
 
 #define ASSIGN_FLOAT(RES, KEY, REQUIRED) do { \
   toml_datum_t RES##_r = toml_seek(result.toptab, KEY); \
-  if (RES##_r.type == TOML_INT64) \
+  if (RES##_r.type == TOML_FP64) \
     RES = RES##_r.u.fp64; \
   else if (REQUIRED) { \
     PERROR("Missing or invalid key: %s\n", KEY); \
