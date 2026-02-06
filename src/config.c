@@ -128,6 +128,10 @@ Config *read_config(void) {
   config->render_font = expand_path(old);
   free(old);
 
+  old = config->render_bg_img;
+  config->render_bg_img = expand_path(old);
+  free(old);
+
   old = config->text_command;
   config->text_command = expand_path(old);
   free(old);
