@@ -23,10 +23,10 @@ static char *expand_path(char *path) {
   return out;
 }
 
-#define CONFIG_PATH "~/.config/textwal/config.toml"
+#define CONFIG_PATH "~/.config/textwal2/config.toml"
 
 Config *read_config(void) {
-  char *config_path = expand_path("~/.config/textwal/config.toml");
+  char *config_path = expand_path(CONFIG_PATH);
   if(!config_path) {
     PERROR("Couldn't expand config path.\n");
     return NULL;
@@ -87,7 +87,7 @@ Config *read_config(void) {
   float opacity = 1.0;
   char *command = strdup("echo 'Hello, world!'");
   char *set_command = strdup("~/.config/txtwal/set-wallpaper.sh");
-  char *path = strdup("~/Pictures/textwal/output.png");
+  char *path = strdup("~/Pictures/textwal2/output.png");
 
   ASSIGN_INT(width, "render.width", 0);
   ASSIGN_INT(height, "render.height", 0);
