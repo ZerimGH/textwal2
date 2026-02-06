@@ -1,6 +1,6 @@
 SRCS = ./src/*.c
 OUT_DIR = ./build
-OUT = $(OUT_DIR)/main
+OUT = $(OUT_DIR)/textwal2
 
 TOML_DIR = ./tomlc17
 
