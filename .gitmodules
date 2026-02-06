@@ -1,0 +1,9 @@
+[submodule "tomlc17"]
+	path = tomlc17
+	url = https://github.com/cktan/tomlc17.git
+[submodule "freetype"]
+	path = freetype
+	url = https://github.com/freetype/freetype.git
+[submodule "stb"]
+	path = stb
+	url = https://github.com/nothings/stb.git
