@@ -9,28 +9,8 @@
 #include "stdlib.h"
 #include "config.h"
 
-static char *expand_path(char *path) {
-  if(!path || *path == '\0') return NULL;
-  if(*path != '~') return strdup(path);
-  const char *home = getenv("HOME");
-  if(!home || strlen(home) == 0) {
-    PERROR("Couldn't get home directory.");
-    return NULL;
-  }
-  size_t new_len = strlen(path) + strlen(home) - 1;
-  char *out = malloc(sizeof(char) * (new_len + 1));
-  if(!out) {
-    PERROR("malloc() failed.\n");
-    return NULL;
-  }
-  snprintf(out, new_len + 1, "%s%s", home, path + 1);
-  return out;
-}
-
 char *run_command(const char *command) {
   if (!command) return NULL;
-  char *expanded = expand_path((char *)command);
-  if (!expanded) return NULL;
 
   size_t len = strlen(expanded) + 16;
   char *cmd = malloc(len);
