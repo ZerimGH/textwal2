@@ -84,23 +84,7 @@ char *run_command(const char *command) {
 
 void run_command_noread(const char *command) {
   if (!command) return;
-  char *expanded = expand_path((char *)command);
-  if (!expanded) return;
-
-  size_t len = strlen(expanded) + 16;
-  char *cmd = malloc(len);
-  if (!cmd) {
-    free(expanded);
-    return;
-  }
-
-  snprintf(cmd, len, "/bin/sh -c \"%s\"", expanded);
-  free(expanded);
-
-  FILE *fp = popen(cmd, "r");
-  free(cmd);
-  if (!fp) return;
-  pclose(fp);
+  system(command);
 }
 
 TextAlign parse_text_align(char *s) {
