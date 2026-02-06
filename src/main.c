@@ -9,57 +9,6 @@
 #include "stdlib.h"
 #include "config.h"
 
-char *run_command(const char *command) {
-  if (!command) return NULL;
-
-  size_t len = strlen(command) + 16;
-  char *cmd = malloc(len);
-  if (!cmd) {
-    return NULL;
-  }
-
-  snprintf(cmd, len, "/bin/sh -c \"%s\"", command);
-  FILE *fp = popen(cmd, "r");
-  free(cmd);
-
-  if (!fp) {
-    PERROR("popen() failed\n");
-    return NULL;
-  }
-
-  size_t alloced = 1024;
-  size_t count = 0;
-  char *out = malloc(sizeof(char) * alloced);
-  if (!out) {
-    pclose(fp);
-    return NULL;
-  }
-
-  int c;
-  while ((c = fgetc(fp)) != EOF) {
-    if (count + 1 >= alloced) {
-      alloced *= 2;
-      char *tmp = realloc(out, sizeof(char) * alloced);
-      if (!tmp) {
-        free(out);
-        pclose(fp);
-        return NULL;
-      }
-      out = tmp;
-    }
-    out[count++] = (char)c;
-  }
-  out[count] = '\0';
-
-  int status = pclose(fp);
-  if (status != 0) {
-    free(out);
-    return NULL;
-  }
-  return out;
-}
-
-
 void run_command_noread(const char *command) {
   if (!command) return;
   system(command);
@@ -86,13 +35,48 @@ CharAlign parse_char_align(char *s) {
   return -1;
 }
 
+char *get_text(void) {
+  size_t alloced = 1024;
+  char *input_text = malloc(sizeof(char) * alloced);
+
+  if (!input_text) {
+    PERROR("malloc() failed.\n");
+    return NULL;
+  }
+
+  size_t written = 0;
+  char c;
+
+  while ((c = getchar()) && c != EOF) {
+    if (written + 1 >= alloced) {
+      alloced *= 2;
+      char *new = realloc(input_text, sizeof(char) * alloced);
+      if (!new) {
+        PERROR("realloc() failed.\n");
+        free(input_text);
+        return NULL;
+      }
+      input_text = new;
+    }
+    input_text[written++] = c;
+  }
+
+  if (written == 0) {
+    free(input_text);
+    return NULL;
+  }
+
+  input_text[written] = '\0';
+  return input_text;
+}
+
 int set(void) {
   Config *c = read_config();
   if(!c) {
     PERROR("Couldn't read config file.\n");
     return 1;
   }
-  char *txt = run_command(c->text_command);
+  char *txt = get_text(); 
   if(!txt) {
     PERROR("Text command failed.\n");
     config_destroy(&c);

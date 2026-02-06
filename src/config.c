@@ -118,7 +118,6 @@ Config *read_config(void) {
   config->render_char_align = char_align;
   config->render_bg_img = bg_img;
   config->render_opacity = opacity;
-  config->text_command = command;
   config->wallpaper_set_command = set_command;
   config->wallpaper_path = path;
   toml_free(result);
@@ -130,10 +129,6 @@ Config *read_config(void) {
 
   old = config->render_bg_img;
   config->render_bg_img = expand_path(old);
-  free(old);
-
-  old = config->text_command;
-  config->text_command = expand_path(old);
   free(old);
 
   old = config->wallpaper_set_command;
@@ -156,7 +151,6 @@ void config_destroy(Config **config) {
   if(c->render_text_align) free(c->render_text_align);
   if(c->render_char_align) free(c->render_char_align);
   if(c->render_bg_img) free(c->render_bg_img);
-  if(c->text_command) free(c->text_command);
   if(c->wallpaper_path) free(c->wallpaper_path);
   if(c->wallpaper_set_command) free(c->wallpaper_set_command);
   free(c);
@@ -175,7 +169,6 @@ void config_print(Config *config) {
   if(config->render_text_align) printf("render.text_align = %s\n", config->render_text_align);
   if(config->render_char_align) printf("render.char_align = %s\n", config->render_char_align);
   if(config->render_bg_img) printf("render.bg_img = %s\n", config->render_bg_img);
-  if(config->text_command) printf("text.command = %s\n", config->text_command);
   if(config->wallpaper_path) printf("wallpaper.path = %s\n", config->wallpaper_path);
   if(config->wallpaper_set_command) printf("wallpaper.set_command = %s\n", config->wallpaper_set_command);
 }

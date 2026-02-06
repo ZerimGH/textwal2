@@ -23,9 +23,6 @@ char_align = "left"
 # bg_img = "/path/to/img.png"
 opacity = 1.0 
 
-[text]
-command="echo 'Hello, world!'"
-
 [wallpaper]
 path="~/.config/textwal2/output.png"
 set_command="~/.config/textwal2/set-wallpaper.sh"

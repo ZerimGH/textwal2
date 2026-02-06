@@ -14,8 +14,6 @@ typedef struct {
   char *render_bg_img;
   float render_opacity;
 
-  char *text_command;
-
   char *wallpaper_path;
   char *wallpaper_set_command;
 } Config;
